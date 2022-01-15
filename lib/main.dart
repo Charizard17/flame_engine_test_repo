@@ -14,7 +14,7 @@ void main() {
 }
 
 class MyGame extends FlameGame with DoubleTapDetector {
-  SpriteComponent girl = SpriteComponent();
+  SpriteComponent boy = SpriteComponent();
   bool running = true;
   String direction = 'down';
   SpriteAnimationComponent girlAnimation = SpriteAnimationComponent();
@@ -23,12 +23,12 @@ class MyGame extends FlameGame with DoubleTapDetector {
   @override
   Future<void> onLoad() async {
     print('loading....');
-    girl
-      ..sprite = await loadSprite('girl.png')
-      ..size = Vector2(100.0, 100.0)
-      ..x = 150
-      ..y = 50;
-    // add(girl);
+    boy
+      ..sprite = await loadSprite('boy.png')
+      ..size = Vector2(200.0, 200.0)
+      ..x = 50
+      ..y = 500;
+    add(boy);
 
     var spriteSheet = await images.load('girl_spritesheet.png');
     final spriteSize = Vector2(152 * 1.4, 142 * 1.4);
@@ -36,7 +36,7 @@ class MyGame extends FlameGame with DoubleTapDetector {
         amount: 9, stepTime: 0.05, textureSize: Vector2(151.3, 142.0));
     girlAnimation =
         SpriteAnimationComponent.fromFrameData(spriteSheet, spriteData)
-          ..x = 100
+          ..x = 170
           ..y = 50
           ..size = spriteSize;
     add(girlAnimation);
@@ -55,7 +55,7 @@ class MyGame extends FlameGame with DoubleTapDetector {
         break;
     }
 
-    if (girlAnimation.y > 400) {
+    if (girlAnimation.y > 500) {
       direction = 'up';
     }
     if (girlAnimation.y < 20) {
