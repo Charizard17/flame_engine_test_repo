@@ -25,12 +25,11 @@ class ControlButtons extends StatelessWidget {
             },
           ),
           IconButton(
-            icon: Icon(Icons.arrow_upward_outlined),
+            icon: Icon(Icons.multitrack_audio),
             iconSize: 50,
             color: Colors.black,
             onPressed: () {
               // do something
-              game.direction = 'up';
             },
           ),
           IconButton(

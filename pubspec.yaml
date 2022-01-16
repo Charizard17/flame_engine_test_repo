@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   flame: ^1.0.0
+  flame_audio: 1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +56,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/audio/
+    - assets/audio/knight_online_soundtrack.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
