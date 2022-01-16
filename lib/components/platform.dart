@@ -13,7 +13,7 @@ class Platform extends SpriteComponent with HasHitboxes, Collidable {
   @override
   void onCollision(Set<Vector2> points, Collidable other) {
     super.onCollision(points, other);
-    print('platform collision');
-    // removeFromParent();
+    // print('platform collision');
+    removeFromParent();
   }
 }

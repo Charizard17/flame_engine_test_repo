@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -13,11 +15,12 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
   Cat cat = Cat();
   Dog dogAnimation = Dog();
   bool running = true;
-  String direction = 'right';
+  String direction = 'up';
   late Sprite platformSprite;
   double characterScale = 0.7;
   double speed = 2.0;
   double jumpHeight = 50.0;
+  double rotateSpeed = 0.5;
 
   void initPlatform(Sprite sprite, screenSize) {
     for (var i = 1; i < 9; ++i) {
@@ -57,19 +60,20 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
 
     cat
       ..sprite = await loadSprite('cat.png')
+      ..position = Vector2(50, 400)
       ..size = Vector2(152.0 * characterScale, 152.0 * characterScale)
-      ..x = 50
-      ..y = 500;
+      ..anchor = Anchor.center;
     add(cat);
 
-    var spriteSheet = await images.load('dog_spritesheet.png');
+    var spriteSheet = await images.load('dog_jump_spritesheet.png');
     final spriteSize = Vector2(152 * characterScale, 142 * characterScale);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-        amount: 8, stepTime: 0.05, textureSize: Vector2(161.5, 142.0));
+        amount: 8, stepTime: 0.05, textureSize: Vector2(160.0, 142.0));
     dogAnimation = dogAnimation = Dog.fromFrameData(spriteSheet, spriteData)
       ..x = 170
       ..y = 650
-      ..size = spriteSize;
+      ..size = spriteSize
+      ..anchor = Anchor.center;
     add(dogAnimation);
   }
 
@@ -77,20 +81,23 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
   void update(double dt) {
     super.update(dt);
 
+    cat.angle += rotateSpeed * dt;
+    cat.angle %= 2 * math.pi;
+
     switch (direction) {
-      case 'right':
-        dogAnimation.x += speed;
+      case 'up':
+        dogAnimation.y += speed;
         break;
-      case 'left':
-        dogAnimation.x -= speed;
+      case 'down':
+        dogAnimation.y -= speed;
         break;
     }
 
-    if (dogAnimation.x > 280) {
-      direction = 'left';
+    if (dogAnimation.y > size[1] - 30) {
+      direction = 'down';
     }
-    if (dogAnimation.x < 5) {
-      direction = 'right';
+    if (dogAnimation.y < 30) {
+      direction = 'up';
     }
   }
 

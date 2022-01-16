@@ -13,7 +13,7 @@ class Cat extends SpriteComponent with HasHitboxes, Collidable {
   @override
   void onCollision(Set<Vector2> points, Collidable other) {
     super.onCollision(points, other);
-    print('Collision!');
+    // print('Collision!');
     // removeFromParent();
   }
 }
