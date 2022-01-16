@@ -7,6 +7,10 @@ import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
+import './boy.dart';
+import './girl.dart';
+import './platform.dart';
+
 void main() {
   print('main file');
 
@@ -34,12 +38,20 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
     add(background);
 
     platformSprite = await loadSprite('platform.png');
-    SpriteComponent platform = SpriteComponent()
-      ..sprite = platformSprite
-      ..size = Vector2(150, 35)
-      ..x = 30
-      ..y = 665;
+    Platform platform =
+        Platform(position: Vector2(200, 600), size: Vector2(150, 35))
+          ..sprite = platformSprite;
     add(platform);
+
+    Platform platform2 =
+        Platform(position: Vector2(25, 400), size: Vector2(150, 35))
+          ..sprite = platformSprite;
+    add(platform2);
+
+    Platform platform3 =
+        Platform(position: Vector2(200, 200), size: Vector2(150, 35))
+          ..sprite = platformSprite;
+    add(platform3);
 
     boy
       ..sprite = await loadSprite('boy.png')
@@ -88,40 +100,5 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
       resumeEngine();
     }
     running = !running;
-  }
-}
-
-class Boy extends SpriteComponent with HasHitboxes, Collidable {
-  Boy({
-    Vector2? position,
-    Vector2? size,
-  }) : super(position: position, size: size) {
-    // debugMode = true;
-    addHitbox(HitboxRectangle());
-  }
-
-  @override
-  void onCollision(Set<Vector2> points, Collidable other) {
-    super.onCollision(points, other);
-    print('Collision!');
-    // removeFromParent();
-  }
-}
-
-class Girl extends SpriteAnimationComponent with HasHitboxes, Collidable {
-  Girl({
-    Vector2? position,
-    Vector2? size,
-  }) : super(position: position, size: size);
-
-  Girl.fromFrameData(
-    ui.Image image,
-    SpriteAnimationData data, {
-    Vector2? position,
-    Vector2? size,
-  }) : super(position: position, size: size) {
-    animation = SpriteAnimation.fromFrameData(image, data);
-    // debugMode = true;
-    addHitbox(HitboxRectangle());
   }
 }
