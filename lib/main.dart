@@ -7,8 +7,8 @@ import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/flame.dart';
 
-import './boy.dart';
-import './girl.dart';
+import './cat.dart';
+import './dog.dart';
 import './platform.dart';
 
 void main() {
@@ -21,10 +21,10 @@ void main() {
 }
 
 class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
-  Boy boy = Boy();
-  Girl girlAnimation = Girl();
+  Cat cat = Cat();
+  Dog dogAnimation = Dog();
   bool running = true;
-  String direction = 'down';
+  String direction = 'right';
   double speed = 2.0;
   late Sprite platformSprite;
   double characterScale = 0.7;
@@ -77,22 +77,22 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
     //       ..sprite = platformSprite;
     // add(platform3);
 
-    boy
-      ..sprite = await loadSprite('boy.png')
+    cat
+      ..sprite = await loadSprite('cat.png')
       ..size = Vector2(152.0 * characterScale, 152.0 * characterScale)
       ..x = 50
       ..y = 500;
-    add(boy);
+    add(cat);
 
-    var spriteSheet = await images.load('girl_spritesheet.png');
+    var spriteSheet = await images.load('dog_spritesheet.png');
     final spriteSize = Vector2(152 * characterScale, 142 * characterScale);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-        amount: 9, stepTime: 0.05, textureSize: Vector2(151.3, 142.0));
-    girlAnimation = girlAnimation = Girl.fromFrameData(spriteSheet, spriteData)
+        amount: 8, stepTime: 0.05, textureSize: Vector2(161.5, 142.0));
+    dogAnimation = dogAnimation = Dog.fromFrameData(spriteSheet, spriteData)
       ..x = 170
-      ..y = 50
+      ..y = 250
       ..size = spriteSize;
-    add(girlAnimation);
+    add(dogAnimation);
   }
 
   @override
@@ -100,19 +100,19 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
     super.update(dt);
 
     switch (direction) {
-      case 'down':
-        girlAnimation.y += speed;
+      case 'right':
+        dogAnimation.x += speed;
         break;
-      case 'up':
-        girlAnimation.y -= speed;
+      case 'left':
+        dogAnimation.x -= speed;
         break;
     }
 
-    if (girlAnimation.y > 500) {
-      direction = 'up';
+    if (dogAnimation.x > 280) {
+      direction = 'left';
     }
-    if (girlAnimation.y < 20) {
-      direction = 'down';
+    if (dogAnimation.x < 5) {
+      direction = 'right';
     }
   }
 

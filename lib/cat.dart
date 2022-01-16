@@ -1,8 +1,8 @@
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 
-class Boy extends SpriteComponent with HasHitboxes, Collidable {
-  Boy({
+class Cat extends SpriteComponent with HasHitboxes, Collidable {
+  Cat({
     Vector2? position,
     Vector2? size,
   }) : super(position: position, size: size) {

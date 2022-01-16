@@ -3,13 +3,13 @@ import 'dart:ui' as ui;
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 
-class Girl extends SpriteAnimationComponent with HasHitboxes, Collidable {
-  Girl({
+class Dog extends SpriteAnimationComponent with HasHitboxes, Collidable {
+  Dog({
     Vector2? position,
     Vector2? size,
   }) : super(position: position, size: size);
 
-  Girl.fromFrameData(
+  Dog.fromFrameData(
     ui.Image image,
     SpriteAnimationData data, {
     Vector2? position,
