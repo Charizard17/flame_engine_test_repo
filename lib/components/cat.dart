@@ -7,7 +7,7 @@ class Cat extends SpriteComponent with HasHitboxes, Collidable {
     Vector2? size,
   }) : super(position: position, size: size) {
     // debugMode = true;
-    addHitbox(HitboxRectangle());
+    // addHitbox(HitboxRectangle());
   }
 
   @override
