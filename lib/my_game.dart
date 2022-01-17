@@ -6,6 +6,8 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame/effects.dart';
+import 'package:flutter/material.dart';
 
 import './components/cat.dart';
 import './components/dog.dart';
@@ -13,6 +15,7 @@ import './components/platform.dart';
 
 class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
   Cat cat = Cat();
+  Cat cat2 = Cat();
   Dog dogAnimation = Dog();
   Platform platform = Platform();
   bool running = true;
@@ -71,6 +74,23 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
       ..anchor = Anchor.center;
     add(cat);
 
+    cat2
+      ..sprite = await loadSprite('cat.png')
+      ..position = Vector2(200, 500)
+      ..size = Vector2(152.0 * characterScale, 152.0 * characterScale)
+      ..anchor = Anchor.center;
+    cat2.add(
+      RotateEffect.by(
+        math.pi * -2,
+        EffectController(
+          duration: 4,
+          infinite: true,
+          curve: Curves.elasticIn,
+        ),
+      ),
+    );
+    add(cat2);
+
     var spriteSheet = await images.load('dog_jump_spritesheet.png');
     final spriteSize = Vector2(152 * characterScale, 142 * characterScale);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
@@ -89,7 +109,7 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
 
     if ((cat.y + cat.height - 45 > platform.y) &&
         (cat.x < platform.x + platform.width)) {
-      print('passed platform');
+      // print('passed platform');
     } else {
       cat.y += 50 * dt;
     }
