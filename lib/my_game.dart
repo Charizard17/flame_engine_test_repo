@@ -11,12 +11,13 @@ import 'package:flutter/material.dart';
 
 import './components/cat.dart';
 import './components/dog.dart';
+import './components/dog_animation.dart';
 import './components/platform.dart';
 
-class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
+class MyGame extends FlameGame with HasTappables, HasCollidables {
   Cat cat = Cat();
   Cat cat2 = Cat();
-  Dog dogAnimation = Dog();
+  DogAnimation dogAnimation = DogAnimation();
   Platform platform = Platform();
   bool running = true;
   String direction = 'up';
@@ -91,15 +92,27 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
     );
     add(cat2);
 
+    for (int i = 0; i < 5; ++i) {
+      Dog dog = Dog();
+
+      dog
+        ..sprite = await loadSprite('dog.png')
+        ..position = Vector2(250, i * 100 + 50)
+        ..size = Vector2(100.0 * characterScale, 100.0 * characterScale)
+        ..anchor = Anchor.center;
+      add(dog);
+    }
+
     var spriteSheet = await images.load('dog_jump_spritesheet.png');
     final spriteSize = Vector2(152 * characterScale, 142 * characterScale);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
         amount: 8, stepTime: 0.05, textureSize: Vector2(160.0, 142.0));
-    dogAnimation = dogAnimation = Dog.fromFrameData(spriteSheet, spriteData)
-      ..x = 250
-      ..y = 100
-      ..size = spriteSize
-      ..anchor = Anchor.center;
+    dogAnimation =
+        dogAnimation = DogAnimation.fromFrameData(spriteSheet, spriteData)
+          ..x = 250
+          ..y = 100
+          ..size = spriteSize
+          ..anchor = Anchor.center;
     add(dogAnimation);
   }
 
@@ -131,13 +144,14 @@ class MyGame extends FlameGame with DoubleTapDetector, HasCollidables {
     }
   }
 
-  @override
-  void onDoubleTap() {
-    if (running) {
-      pauseEngine();
-    } else {
-      resumeEngine();
-    }
-    running = !running;
-  }
+  // below code needs DoubleTapDetector mixin
+  // @override
+  // void onDoubleTap() {
+  //   if (running) {
+  //     pauseEngine();
+  //   } else {
+  //     resumeEngine();
+  //   }
+  //   running = !running;
+  // }
 }

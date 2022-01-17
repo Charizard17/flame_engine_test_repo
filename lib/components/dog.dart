@@ -1,22 +1,20 @@
-import 'dart:ui' as ui;
-
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
+import 'package:flame/input.dart';
 
-class Dog extends SpriteAnimationComponent with HasHitboxes, Collidable {
+class Dog extends SpriteComponent with Tappable {
   Dog({
     Vector2? position,
     Vector2? size,
-  }) : super(position: position, size: size);
+  }) : super(position: position, size: size) {}
 
-  Dog.fromFrameData(
-    ui.Image image,
-    SpriteAnimationData data, {
-    Vector2? position,
-    Vector2? size,
-  }) : super(position: position, size: size) {
-    animation = SpriteAnimation.fromFrameData(image, data);
-    // debugMode = true;
-    addHitbox(HitboxRectangle());
+  @override
+  bool onTapDown(TapDownInfo info) {
+    try {
+      removeFromParent();
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
