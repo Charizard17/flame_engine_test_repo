@@ -11,14 +11,16 @@ import 'package:flame_audio/flame_audio.dart';
 import 'package:flame/effects.dart';
 import 'package:flutter/material.dart';
 
+import './helpers/get_angle.dart';
 import './components/cat.dart';
 import './components/dog.dart';
 import './components/dog_animation.dart';
 import './components/platform.dart';
 
-class MyGame extends FlameGame with HasTappables, HasCollidables {
+class MyGame extends FlameGame with HasCollidables, TapDetector {
   Cat cat = Cat();
   Cat cat2 = Cat();
+  Dog dog = Dog();
   DogAnimation dogAnimation = DogAnimation();
   Platform platform = Platform();
   bool running = true;
@@ -96,18 +98,26 @@ class MyGame extends FlameGame with HasTappables, HasCollidables {
     );
     add(cat2);
 
-    var dogImage = await images.load('dog.png');
-    for (int i = 1; i < 11; ++i) {
-      Dog dog = Dog();
+    // random small dogs
+    // var dogImage = await images.load('dog.png');
+    // for (int i = 1; i < 11; ++i) {
+    //   Dog dog = Dog();
 
-      dog
-        ..sprite = Sprite(images.fromCache('dog.png'))
-        ..position = Vector2(
-            randomX.nextDouble() * size[0], randomY.nextDouble() * size[1])
-        ..size = Vector2(100.0 * characterScale, 100.0 * characterScale)
-        ..anchor = Anchor.center;
-      add(dog);
-    }
+    //   dog
+    //     ..sprite = Sprite(images.fromCache('dog.png'))
+    //     ..position = Vector2(
+    //         randomX.nextDouble() * size[0], randomY.nextDouble() * size[1])
+    //     ..size = Vector2(100.0 * characterScale, 100.0 * characterScale)
+    //     ..anchor = Anchor.center;
+    //   add(dog);
+    // }
+
+    dog
+      ..sprite = await loadSprite('dog.png')
+      ..position = Vector2(200, 250)
+      ..size = Vector2(100.0 * characterScale, 100.0 * characterScale)
+      ..anchor = Anchor.center;
+    add(dog);
 
     var spriteSheet = await images.load('dog_jump_spritesheet.png');
     final spriteSize = Vector2(152 * characterScale, 142 * characterScale);
@@ -160,4 +170,18 @@ class MyGame extends FlameGame with HasTappables, HasCollidables {
   //   }
   //   running = !running;
   // }
+
+  @override
+  void onTapUp(TapUpInfo tapInfo) {
+    var tapPosition = tapInfo.eventPosition.game;
+    print('tap is or type: ${tapPosition.runtimeType}');
+    print('tap position: $tapPosition');
+    var dogPosition = dog.position;
+    print('dog position: $dogPosition');
+
+    var angle = getAngle(dogPosition, tapPosition);
+    print('move to angle $angle');
+
+    dog.angle = angle;
+  }
 }

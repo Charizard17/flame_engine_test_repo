@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
 import 'package:flame/input.dart';
 
-class Dog extends SpriteComponent with Tappable {
+class Dog extends SpriteComponent {
   Dog({
     Vector2? position,
     Vector2? size,
