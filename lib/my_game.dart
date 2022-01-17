@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:math' as math;
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -24,6 +26,8 @@ class MyGame extends FlameGame with HasTappables, HasCollidables {
   late Sprite platformSprite;
   double characterScale = 0.7;
   double speed = 2.0;
+  Random randomY = Random();
+  Random randomX = Random();
 
   // void initPlatform(Sprite sprite, screenSize) {
   //   for (var i = 1; i < 9; ++i) {
@@ -92,12 +96,14 @@ class MyGame extends FlameGame with HasTappables, HasCollidables {
     );
     add(cat2);
 
-    for (int i = 0; i < 5; ++i) {
+    var dogImage = await images.load('dog.png');
+    for (int i = 1; i < 11; ++i) {
       Dog dog = Dog();
 
       dog
-        ..sprite = await loadSprite('dog.png')
-        ..position = Vector2(250, i * 100 + 50)
+        ..sprite = Sprite(images.fromCache('dog.png'))
+        ..position = Vector2(
+            randomX.nextDouble() * size[0], randomY.nextDouble() * size[1])
         ..size = Vector2(100.0 * characterScale, 100.0 * characterScale)
         ..anchor = Anchor.center;
       add(dog);
